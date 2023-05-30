@@ -26,7 +26,12 @@ export function setMeasurementEnable(enabled: boolean) {
   return makePacket(0x16, Buffer.of(enabled ? 0x01 : 0x00));
 }
 
+export function setWindSpeed(speed: number) {
+  return makePacket(0x10, Buffer.of(speed, 0x00, 0x00, 0x00, 0x00));
+}
+
 function makePacket(type: number, values = Buffer.of()) {
   const payload = Buffer.of(0xaa, type, ...values);
   return Buffer.of(...payload, _.sum(payload) & 255);
 }
+

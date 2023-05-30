@@ -48,6 +48,8 @@ export const setMeasurementEnable = (enabled: boolean) => sendMessage(Commands.s
 
 export const setMeasurementInterval = (value: number) => sendMessage(Commands.setMeasurementInterval(value));
 
+export const setWindSpeed = (speed: number) => sendMessage(Commands.setWindSpeed(speed));
+
 export const shutdown = () => sendMessage(Commands.shutdown());
 
 export const readHistory = () => sendMessage(Commands.readHistory());

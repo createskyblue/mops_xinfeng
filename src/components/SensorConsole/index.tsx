@@ -39,6 +39,11 @@ export const SensorConsole: React.FC = () => {
         </ButtonGroup>
       </Row>
       <Row>
+        <h1>风速控制</h1>
+        {/* 滑动数值条：控制风速 */}
+        <input type="range" min="0" max="100" step="1" defaultValue="50" className={locals.slider} id="windSpeed" />
+      </Row>
+      <Row>
         <h1>Real-time</h1>
         <Table className={locals.table} responsive borderless>
           <thead>
