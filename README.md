@@ -5,3 +5,7 @@
 原项目地址是 <https://github.com/NiceLabs/mops-vida-pm-watchdog>
 
 ![界面](docs/Snipaste_2023-05-31_16-53-10.png)
+
+## 在线体验
+
+<https://createskyblue.github.io/mops_xinfeng/dist>
