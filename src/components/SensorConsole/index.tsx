@@ -2,7 +2,7 @@ import prettyDuration from 'pretty-ms';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Container, Progress, Row, Table } from 'reactstrap';
-import { connect, disconnect, readHistory, requestDevice, shutdown } from '../../actions/sensor';
+import { connect, disconnect, readHistory, requestDevice, shutdown, setWindSpeed } from '../../actions/sensor';
 import { FormattedPM25 } from './FormattedPM25';
 import { History } from './History';
 import locals from './index.scss';
@@ -23,6 +23,7 @@ export const SensorConsole: React.FC = () => {
   };
   const onShutdown = () => dispatch(shutdown());
   const onReadHistory = () => dispatch(readHistory());
+  //   const onSetWindSpeed = (speed: number) => dispatch(setWindSpeed(speed));
   return (
     <Container className={locals.container}>
       <Row>
@@ -41,7 +42,15 @@ export const SensorConsole: React.FC = () => {
       <Row>
         <h1>风速控制</h1>
         {/* 滑动数值条：控制风速 */}
-        <input type="range" min="0" max="100" step="1" defaultValue="50" className={locals.slider} id="windSpeed" />
+        <input
+          type='range'
+          min='0'
+          max='100'
+          step='1'
+          defaultValue='50'
+          id='windSpeed'
+          onChange={(event) => dispatch(setWindSpeed(parseInt(event.target.value)))}
+        />
       </Row>
       <Row>
         <h1>Real-time</h1>
