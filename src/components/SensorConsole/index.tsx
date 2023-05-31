@@ -97,7 +97,7 @@ export const SensorConsole: React.FC = () => {
       </Row>
       <Row>
         <p>在项目`MOPS·VIDA PM Watchdog`的基础上增加风量调节功能 原项目地址是 https://github.com/NiceLabs/mops-vida-pm-watchdog</p>
-        <p>本项目地址是 https://github.com/createskyblue/mops-vida-pm-watchdog_xinfeng</p>
+        <p>本项目地址是 https://github.com/createskyblue/mops_xinfeng</p>
       </Row>
     </Container>
   );
