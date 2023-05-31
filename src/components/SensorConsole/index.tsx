@@ -3,10 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Container, Progress, Row, Table, Input } from 'reactstrap';
 import { connect, disconnect, readHistory, requestDevice, shutdown, setWindSpeed } from '../../actions/sensor';
-import { FormattedPM25 } from './FormattedPM25';
-import { History } from './History';
 import locals from './index.scss';
-import { MeasurementInterval } from './MeasurementInterval';
 
 export const SensorConsole: React.FC = () => {
   const dispatch = useDispatch();
@@ -22,17 +19,16 @@ export const SensorConsole: React.FC = () => {
     }
   };
   const onShutdown = () => dispatch(shutdown());
-  const onReadHistory = () => dispatch(readHistory());
   //   const onSetWindSpeed = (speed: number) => dispatch(setWindSpeed(speed));
   return (
     <Container className={locals.container}>
       <Row>
         <ButtonGroup>
           <Button color={connected ? 'success' : 'primary'} onClick={onConnect}>
-            {connected ? 'Disconnect' : 'Connect'}
+            {connected ? '断开连接' : '连接设备'}
           </Button>
           <Button disabled={!connected} color={connected ? 'danger' : undefined} onClick={onShutdown}>
-            {shuttingdown ? 'Shutting down' : 'Shutdown'}
+            {shuttingdown ? '关机中' : '关机'}
           </Button>
         </ButtonGroup>
       </Row>
@@ -47,7 +43,9 @@ export const SensorConsole: React.FC = () => {
           </thead>
           <tbody>
             <tr>
-              <td>电池</td>
+              <td>
+                <strong>电池</strong>
+              </td>
               <td>
                 <Progress value={latest.batteryCapacity ?? 0}>
                   {latest.batteryCapacity ? `${latest.batteryCapacity}%` : 'N/A'} {latest.batteryCharging ? '(Charging)' : '(Discharge)'}
@@ -55,7 +53,9 @@ export const SensorConsole: React.FC = () => {
               </td>
             </tr>
             <tr>
-              <td>调节风量</td>
+              <td>
+                <strong>调节风量</strong>
+              </td>
               <td>
                 <Input
                   type='range'
@@ -69,25 +69,36 @@ export const SensorConsole: React.FC = () => {
               </td>
             </tr>
             <tr>
-              <td>当前风量</td>
+              <td>
+                <strong>当前风量</strong>
+              </td>
               <td className='text-monospace'>{latest.windSpeed ? latest.windSpeed + '%' : 'N/A'}</td>
             </tr>
             <tr>
-              <td>运行时间</td>
+              <td>
+                <strong>运行时间</strong>
+              </td>
               <td className='text-monospace'>{latest.runTime ? prettyDuration(latest.runTime * 1000) : 'N/A'}</td>
             </tr>
             <tr>
-              <td>启动时间</td>
+              <td>
+                <strong>启动时间</strong>
+              </td>
               <td className='text-monospace'>{latest.bootTime ? prettyDuration(latest.bootTime * 1000) : 'N/A'}</td>
             </tr>
             <tr>
-              <td>固件版本</td>
+              <td>
+                <strong>固件版本</strong>
+              </td>
               <td className='text-monospace'>{latest.version ?? 'N/A'}</td>
             </tr>
           </tbody>
         </Table>
       </Row>
-      <History />
+      <Row>
+        <p>在项目`MOPS·VIDA PM Watchdog`的基础上增加风量调节功能 原项目地址是 https://github.com/NiceLabs/mops-vida-pm-watchdog</p>
+        <p>本项目地址是 https://github.com/createskyblue/mops-vida-pm-watchdog_xinfeng</p>
+      </Row>
     </Container>
   );
 };
