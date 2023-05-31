@@ -1,4 +1,4 @@
-# MOPS 便携式空气净化器
+# MOPS 忻风随身空气净化器
 
 在项目`MOPS·VIDA PM Watchdog`的基础上增加风量调节功能
 

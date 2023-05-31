@@ -33,7 +33,7 @@ export const SensorConsole: React.FC = () => {
         </ButtonGroup>
       </Row>
       <Row>
-        <h1>MOPS 便携式空气净化器</h1>
+        <h1>MOPS 忻风随身空气净化器</h1>
         <Table className={locals.table} responsive borderless>
           <thead>
             <tr>
