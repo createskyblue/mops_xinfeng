@@ -50,6 +50,16 @@ export class MeasurementEnabledPacket {
   }
 }
 
+export class WindSpeedPacket {
+  public readonly windSpeed: number;
+
+  public constructor(data: Buffer) {
+    assert(data, 0x50);
+    this.windSpeed = data.readUInt8(0x5);
+    Object.freeze(this);
+    Object.seal(this);
+  }
+}
 export class BatteryPacket {
   public readonly capacity: number;
   public readonly isCharging: boolean;
@@ -138,6 +148,7 @@ const mapping = {
   aa0a: NoMoreHistoryPacket,
   aa0b: HistoryPacket,
   aa16: MeasurementEnabledPacket,
+  aa5001: WindSpeedPacket,
   aa5004: BatteryPacket,
   aa5005: RuntimePacket,
   aa5006: SensorPacket,

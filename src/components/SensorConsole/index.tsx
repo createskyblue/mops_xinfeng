@@ -1,7 +1,7 @@
 import prettyDuration from 'pretty-ms';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, ButtonGroup, Container, Progress, Row, Table } from 'reactstrap';
+import { Button, ButtonGroup, Container, Progress, Row, Table, Input } from 'reactstrap';
 import { connect, disconnect, readHistory, requestDevice, shutdown, setWindSpeed } from '../../actions/sensor';
 import { FormattedPM25 } from './FormattedPM25';
 import { History } from './History';
@@ -34,26 +34,10 @@ export const SensorConsole: React.FC = () => {
           <Button disabled={!connected} color={connected ? 'danger' : undefined} onClick={onShutdown}>
             {shuttingdown ? 'Shutting down' : 'Shutdown'}
           </Button>
-          <Button disabled={!connected} color={connected ? 'info' : undefined} onClick={onReadHistory}>
-            Read history (one-time)
-          </Button>
         </ButtonGroup>
       </Row>
       <Row>
-        <h1>风速控制</h1>
-        {/* 滑动数值条：控制风速 */}
-        <input
-          type='range'
-          min='0'
-          max='100'
-          step='1'
-          defaultValue='50'
-          id='windSpeed'
-          onChange={(event) => dispatch(setWindSpeed(parseInt(event.target.value)))}
-        />
-      </Row>
-      <Row>
-        <h1>Real-time</h1>
+        <h1>MOPS 便携式空气净化器</h1>
         <Table className={locals.table} responsive borderless>
           <thead>
             <tr>
@@ -63,15 +47,7 @@ export const SensorConsole: React.FC = () => {
           </thead>
           <tbody>
             <tr>
-              <td>
-                PM <sub>2.5</sub>
-              </td>
-              <td className='text-monospace'>
-                <FormattedPM25 value={latest.pm25} />
-              </td>
-            </tr>
-            <tr>
-              <td>Battery</td>
+              <td>电池</td>
               <td>
                 <Progress value={latest.batteryCapacity ?? 0}>
                   {latest.batteryCapacity ? `${latest.batteryCapacity}%` : 'N/A'} {latest.batteryCharging ? '(Charging)' : '(Discharge)'}
@@ -79,27 +55,33 @@ export const SensorConsole: React.FC = () => {
               </td>
             </tr>
             <tr>
-              <td>Record date</td>
-              <td className='text-monospace'>
-                <RecordDate value={latest.recordDate} />
+              <td>调节风量</td>
+              <td>
+                <Input
+                  type='range'
+                  min={0}
+                  max={100}
+                  step={1}
+                  value={latest.windSpeed ?? 0}
+                  id='windSpeed'
+                  onChange={(event) => dispatch(setWindSpeed(parseInt(event.target.value)))}
+                />
               </td>
             </tr>
             <tr>
-              <td>Runtime</td>
+              <td>当前风量</td>
+              <td className='text-monospace'>{latest.windSpeed ? latest.windSpeed + '%' : 'N/A'}</td>
+            </tr>
+            <tr>
+              <td>运行时间</td>
               <td className='text-monospace'>{latest.runTime ? prettyDuration(latest.runTime * 1000) : 'N/A'}</td>
             </tr>
             <tr>
-              <td>Boot time</td>
+              <td>启动时间</td>
               <td className='text-monospace'>{latest.bootTime ? prettyDuration(latest.bootTime * 1000) : 'N/A'}</td>
             </tr>
             <tr>
-              <td>Measurement Interval</td>
-              <td className='text-monospace'>
-                <MeasurementInterval />
-              </td>
-            </tr>
-            <tr>
-              <td>Firmare Version</td>
+              <td>固件版本</td>
               <td className='text-monospace'>{latest.version ?? 'N/A'}</td>
             </tr>
           </tbody>

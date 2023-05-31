@@ -3,6 +3,7 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { setConnected, updatePacket } from '../actions/sensor';
 import _ from 'lodash-es';
 import {
+  WindSpeedPacket,
   BatteryPacket,
   HistoryPacket,
   MeasurementSetupPacket,
@@ -24,6 +25,8 @@ export interface ReportState {
 }
 
 interface Report {
+  windSpeed?: number;
+
   batteryCapacity?: number;
   batteryCharging?: boolean;
 
@@ -66,6 +69,8 @@ export default reducerWithInitialState(defaultState)
       } else if (packet instanceof MeasurementSetupPacket) {
         draft.latest.measurementInterval = packet.interval;
         draft.latest.measurementIntervalEnabled = packet.enabled;
+      } else if (packet instanceof WindSpeedPacket) {
+        draft.latest.windSpeed = packet.windSpeed;
       } else if (packet instanceof RuntimePacket) {
         draft.latest.runTime = packet.runtime;
         draft.latest.bootTime = packet.boottime;
